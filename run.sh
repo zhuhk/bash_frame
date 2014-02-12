@@ -11,6 +11,11 @@ global_config(){
     return 0
 }
 
+g_usage_arr[$((g_usage_off++))]='multi'
+multi(){
+
+}
+
 usage(){
     echo "Usage: $0 <ty> ... "
     for((i=0;i<g_usage_off;i++)){
