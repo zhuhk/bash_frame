@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $(cd $(dirname $BASH_SOURCE&&pwd))/func.sh
+source $(cd $(dirname $BASH_SOURCE ) && pwd)/func.sh
 
 g_usage_arr[$((g_usage_off++))]="global_config"
 global_config(){
