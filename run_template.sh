@@ -4,10 +4,11 @@ module=web_util/core_title
 
 workdir=$(cd $(dirname $BASH_SOURCE) && pwd)
 
-if [ -f $workdir/func.sh ];then
-	source $workdir/func.sh
+func_sh=$workdir/func.sh
+if [ -f "$func_sh" ];then
+	source $func_sh
 else
-	echo "[ERROR] func.sh NotFound. Quit"
+	echo "[FATAL] func.sh NotFound, Quit"
 	exit 1
 fi
 
