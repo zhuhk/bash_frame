@@ -30,5 +30,4 @@
      a. chmod +x run.sh; ./run.sh
 	 b. bash run.sh
 	 c. sudo mv /bin/sh /bin/sh.bak && sudo ln -sf /bin/bash /bin/sh #直接修改系统shell，可能会有负面影响。如果发现问题还原备份的/bin/sh.bak
-    
 
