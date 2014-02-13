@@ -426,3 +426,41 @@ warnrun(){
 	return 0
     fi  
 }
+
+usage(){
+    echo "Usage: $0 <ty> ... "
+    for((i=0;i<g_usage_off;i++)){
+	echo "  ${g_usage_arr[$i]}"
+    }
+}
+
+main(){
+	g_cmd=$1
+	shift
+
+	ty=`type -t "$g_cmd"`
+	if [ -n "$ty" ];then
+		"$g_cmd" "$@"
+		ret=$?
+	else
+		if [[ -n "$g_cmd" ]];then
+		echo "ty:'$g_cmd' Not Defined" >&2
+		fi
+		usage
+		ret=0
+	fi
+
+	if [ $ret -eq 2 ];then
+		usage
+	elif [[ $ret -gt 2 ]];then
+		log_fatal "ty=$ty ret=$?"
+	fi
+
+	exit $ret
+
+}
+
+_app_func_sh=$(cd $(dirname $BASH_SOURCE) && pwd)/app_func.sh
+if [ -f "$_app_func_sh" ];then
+	source "$_app_func_sh"
+fi
