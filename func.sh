@@ -195,6 +195,29 @@ function queryip(){
     return 0
 }
 
+#md5str <string>
+md5str(){
+	python -c "import hashlib; print hashlib.md5('$1').hexdigest()"
+}
+
+#cat | line_md5 
+line_md5(){
+	if ! python -c "import hashlib,sys;" >&/dev/null;then
+		log_warn "try to Run python failed"
+		return 1
+	fi
+
+	cmd=$(
+		echo "import hashlib,sys"
+		echo "for line in sys.stdin:"
+		echo "  line = line.rstrip();"
+		echo "  md5str = hashlib.md5(line).hexdigest();"
+		echo "  print '%s\t%s' % (md5str,line);"
+	)
+	python -c "$cmd"
+	return 0
+}
+
 #del_hist <dir> <filepattern> <maxNum> <minNum>
 del_hist(){
     local f minNum maxNum;
