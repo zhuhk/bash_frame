@@ -9,18 +9,18 @@ get_workroot(){
 }
 
 abs_path(){
-	local dir="$1"
-	local fakeadd=0
-	if [ -d "$dir" ] || [ $(echo "${dir}"|grep -E "/\.\.$|/\.$|/$|^\.\.$|^\.$" -c) -gt 0 ];then
-		dir="$dir/file"
-		fakeadd=1
-	fi
+    local dir="$1"
+    local fakeadd=0
+    if [ -d "$dir" ] || [ $(echo "${dir}"|grep -E "/\.\.$|/\.$|/$|^\.\.$|^\.$" -c) -gt 0 ];then
+        dir="$dir/file"
+        fakeadd=1
+    fi
     dir=`dirname $dir`
-	dir=$(mkdir -p $dir && cd $dir>&/dev/null && pwd)
-	if [ $fakeadd -eq 0 ];then
-		dir=$dir/$(basename $1)
-	fi
-	echo $dir
+    dir=$(mkdir -p $dir && cd $dir>&/dev/null && pwd)
+    if [ $fakeadd -eq 0 ];then
+        dir=$dir/$(basename $1)
+    fi
+    echo $dir
     return 0
 }
 
@@ -197,25 +197,25 @@ function queryip(){
 
 #md5str <string>
 md5str(){
-	python -c "import hashlib; print hashlib.md5('$1').hexdigest()"
+    python -c "import hashlib; print hashlib.md5('$1').hexdigest()"
 }
 
 #cat | line_md5 
 line_md5(){
-	if ! python -c "import hashlib,sys;" >&/dev/null;then
-		log_warn "try to Run python failed"
-		return 1
-	fi
+    if ! python -c "import hashlib,sys;" >&/dev/null;then
+        log_warn "try to Run python failed"
+        return 1
+    fi
 
-	cmd=$(
-		echo "import hashlib,sys"
-		echo "for line in sys.stdin:"
-		echo "  line = line.rstrip();"
-		echo "  md5str = hashlib.md5(line).hexdigest();"
-		echo "  print '%s\t%s' % (md5str,line);"
-	)
-	python -c "$cmd"
-	return 0
+    cmd=$(
+    echo "import hashlib,sys"
+    echo "for line in sys.stdin:"
+    echo "  line = line.rstrip();"
+    echo "  md5str = hashlib.md5(line).hexdigest();"
+    echo "  print '%s\t%s' % (md5str,line);"
+    )
+    python -c "$cmd"
+    return 0
 }
 
 #del_hist <dir> <filepattern> <maxNum> <minNum>
@@ -458,32 +458,32 @@ usage(){
 }
 
 main(){
-	g_cmd=$1
-	shift
+    g_cmd=$1
+    shift
 
-	ty=`type -t "$g_cmd"`
-	if [ -n "$ty" ];then
-		"$g_cmd" "$@"
-		ret=$?
-	else
-		if [[ -n "$g_cmd" ]];then
-		echo "ty:'$g_cmd' Not Defined" >&2
-		fi
-		usage
-		ret=0
-	fi
+    ty=`type -t "$g_cmd"`
+    if [ -n "$ty" ];then
+        "$g_cmd" "$@"
+        ret=$?
+    else
+        if [[ -n "$g_cmd" ]];then
+            echo "ty:'$g_cmd' Not Defined" >&2
+        fi
+        usage
+        ret=0
+    fi
 
-	if [ $ret -eq 2 ];then
-		usage
-	elif [[ $ret -gt 2 ]];then
-		log_fatal "ty=$ty ret=$?"
-	fi
+    if [ $ret -eq 2 ];then
+        usage
+    elif [[ $ret -gt 2 ]];then
+        log_fatal "ty=$ty ret=$?"
+    fi
 
-	exit $ret
+    exit $ret
 
 }
 
 _app_func_sh=$(cd $(dirname $BASH_SOURCE) && pwd)/app_func.sh
 if [ -f "$_app_func_sh" ];then
-	source "$_app_func_sh"
+    source "$_app_func_sh"
 fi
