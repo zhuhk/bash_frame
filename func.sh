@@ -9,7 +9,7 @@ get_workroot(){
 }
 
 abs_path(){
-    local dir="$1"
+    eval local dir="$1"
     local fakeadd=0
     if [ -d "$dir" ] || [ $(echo "${dir}"|grep -E "/\.\.$|/\.$|/$|^\.\.$|^\.$" -c) -gt 0 ];then
         dir="$dir/file"
