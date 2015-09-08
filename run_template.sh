@@ -2,7 +2,7 @@
 
 module=web_util/core_title
 
-workdir=$(cd $(dirname $BASH_SOURCE) && pwd)
+workdir=$(cd -P $(dirname $BASH_SOURCE) && pwd)
 
 func_sh=$workdir/func.sh
 if [ -f "$func_sh" ];then
